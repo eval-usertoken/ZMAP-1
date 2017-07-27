@@ -1,0 +1,12 @@
+#!/bin/sh
+##
+# ZMAP Wrapper
+# Ensure Gateway MAC address is in the arp cache
+# zmap-wrapper
+##
+GATEWAY_IP=$(ip route | grep default | awk {'print $3'})
+GATEWAY_MAC=$(arping -c1 -r $GATEWAY_IP)
+##
+# Run zmap
+##
+zmap -G $GATEWAY_MAC ${1+"$@"}
